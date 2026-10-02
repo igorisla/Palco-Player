@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- metade laranja (deck A) e metade azul (deck B) -->
+    <path android:fillColor="#F2A43A" android:pathData="M54,32 A22,22 0 0,0 54,76 Z" />
+    <path android:fillColor="#4DB8E2" android:pathData="M54,32 A22,22 0 0,1 54,76 Z" />
+</vector>

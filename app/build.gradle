@@ -1,0 +1,42 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'br.sanmartin.palcoplayer'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'br.sanmartin.palcoplayer'
+        minSdk 26
+        targetSdk 34
+        // cada montagem no GitHub ganha um número maior, para o tablet aceitar a atualização
+        versionCode((System.getenv('GITHUB_RUN_NUMBER') ?: '1').toInteger())
+        versionName "1.0." + (System.getenv('GITHUB_RUN_NUMBER') ?: '0')
+    }
+
+    signingConfigs {
+        // chave fixa: assim cada nova versão instala por cima da anterior, sem perder os repertórios
+        palco {
+            storeFile file('palco.keystore')
+            storePassword 'palcoplayer'
+            keyAlias 'palco'
+            keyPassword 'palcoplayer'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.palco
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.palco
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
