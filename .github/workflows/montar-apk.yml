@@ -1,0 +1,48 @@
+name: Montar APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Copiar a página para o app
+        run: python3 tools/montar-pagina.py
+
+      - name: Montar o app
+        run: gradle assembleDebug --no-daemon --stacktrace
+
+      - name: Separar o instalador
+        run: cp app/build/outputs/apk/debug/app-debug.apk PalcoPlayer.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PalcoPlayer-apk
+          path: PalcoPlayer.apk
+
+      - name: Publicar a versão para baixar no tablet
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="v1.0.${{ github.run_number }}"
+          gh release create "$TAG" PalcoPlayer.apk \
+            --title "Palco Player $TAG" \
+            --notes "Abra esta página no tablet e toque em PalcoPlayer.apk para baixar e instalar." \
+            --latest
