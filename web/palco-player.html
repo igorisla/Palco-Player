@@ -14,6 +14,7 @@
   color-scheme:dark;
 }
 html,body{background:var(--bg);color:var(--fg)}
+[hidden]{display:none!important}
 body{font-family:var(--f-body);font-size:15px;line-height:1.4}
 *{box-sizing:border-box}
 button,input,select{font:inherit;color:inherit}
@@ -108,6 +109,11 @@ input[type=range]{width:100%;accent-color:var(--c, var(--fg));height:28px}
 .searchbox svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:20px;height:20px;fill:none;stroke:var(--muted);stroke-width:2}
 .search{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 44px 14px 44px;width:100%;font-size:17px}
 .search:focus{border-color:var(--fg)}
+.smic{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;padding:0;display:grid;place-items:center;background:var(--fg);color:var(--bg);border:0}
+.smic svg{width:22px;height:22px;fill:currentColor}
+body.android .search{padding-right:104px}
+body.android .sclear{right:58px}
+#voiceBtn svg{width:18px;height:18px;fill:currentColor;vertical-align:-3px;margin-right:6px}
 .sclear{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);font-size:20px;padding:6px 10px}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{border-radius:999px;padding:5px 12px;font-size:13px;background:var(--panel2)}
@@ -176,7 +182,49 @@ body:not(.android) .android-only{display:none!important}
 .row.missing .nm{color:var(--muted)}
 .row.missing .mt .miss{color:var(--danger);font-family:var(--f-body)}
 .pk-filter{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.keyline{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.keychip{font-family:var(--f-display);font-weight:700;font-size:19px;letter-spacing:.02em;padding:4px 12px;border-radius:8px;background:var(--cd);color:var(--fg);border:1px solid var(--c)}
+.keychip small{font-weight:500;font-size:13px;color:var(--muted);margin-left:6px;letter-spacing:0}
+.keychip:not(.unk){cursor:pointer}
+.keychip.unk{background:transparent;border-color:var(--line);color:var(--muted);font-size:15px}
+.keyline button{padding:6px 10px;font-size:13px}
+.cifra{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:12px}
+.cifra-head{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cifra-head h2{margin:0;font-family:var(--f-display);font-weight:700;font-size:24px;overflow-wrap:anywhere;min-width:0}
+.cifra-head h2 small{display:block;font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--muted)}
+.ctools{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.ctools button{padding:7px 11px;font-size:13px}
+.ctools button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.cview{background:var(--bg);border-radius:10px;padding:14px 16px;height:min(62vh,640px);overflow:auto;font-family:var(--f-mono);white-space:pre;line-height:1.45;-webkit-overflow-scrolling:touch}
+.cview .ch{color:var(--a);font-weight:700}
+.cview.deckB .ch{color:var(--b)}
+.cview .sec{color:var(--muted)}
+.cview-empty{white-space:normal;font-family:var(--f-body);color:var(--muted);display:grid;place-items:center;text-align:center;gap:10px}
+.cedit{display:grid;gap:10px}
+.autobox{background:var(--bg);border-radius:10px;padding:16px;display:grid;gap:12px;--cc:var(--a)}
+.autobox.deckB{--cc:var(--b)}
+.acrow{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px}
+.acnow,.acnext{border-radius:12px;padding:12px 16px;border:1px solid var(--line);display:grid;align-content:center;min-height:150px}
+.acnow{border-color:var(--cc)}
+.acnow small,.acnext small{font-family:var(--f-display);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:14px}
+.acnow b{font-family:var(--f-display);font-weight:700;font-size:clamp(64px,11vw,128px);line-height:1;color:var(--cc)}
+.acnext b{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,6vw,72px);line-height:1}
+.acnext span{color:var(--muted);font-family:var(--f-mono);font-size:14px}
+.acstrip{display:flex;gap:6px;flex-wrap:wrap}
+.acstrip span{border:1px solid var(--line);border-radius:8px;padding:6px 12px;display:grid;justify-items:center}
+.acstrip b{font-family:var(--f-display);font-size:22px;font-weight:700}
+.acstrip i{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.linkish{border:0;background:none;padding:0;color:var(--fg);text-decoration:underline;font-size:inherit}
+@media (max-width:620px){.acrow{grid-template-columns:minmax(0,1fr)}}
+.cedit textarea{width:100%;min-height:340px;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:12px;font-family:var(--f-mono);font-size:15px;line-height:1.45;white-space:pre;resize:vertical}
+.cedit .row2{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tagk{font-family:var(--f-display);font-weight:700;color:var(--fg);margin-left:4px}
 .kind{font-family:var(--f-body);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:4px;color:var(--fg)}
+ #diag{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:20;display:grid;place-items:center;padding:16px}
+#diag[hidden]{display:none}
+.diag-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;width:min(760px,100%);max-height:90%;display:grid;gap:8px;grid-template-rows:auto auto minmax(0,1fr)}
+.diag-head{display:flex;justify-content:space-between;align-items:center}
+.diag-box pre{margin:0;overflow:auto;font-family:var(--f-mono);font-size:12px;line-height:1.5;white-space:pre-wrap;background:var(--bg);border-radius:8px;padding:10px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;max-width:calc(100% - 32px);z-index:10}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -184,7 +232,7 @@ body:not(.android) .android-only{display:none!important}
 <div class="app">
   <header class="top">
     <div class="brand"><i></i>Palco Player</div>
-    <div class="tools" style="align-items:center"><span class="hint"><kbd>Espaço</kbd> fade · <kbd>/</kbd> buscar música</span><button id="asTelao" class="web-only">Usar esta janela como telão</button></div>
+    <div class="tools" style="align-items:center"><span class="hint web-only"><kbd>Espaço</kbd> fade · <kbd>/</kbd> buscar música</span><button id="voiceBtn" class="android-only">Buscar falando</button><button id="diagBtn">Diagnóstico</button><button id="asTelao" class="web-only">Usar esta janela como telão</button></div>
   </header>
 
   <section class="console" aria-label="Decks e mixer">
@@ -201,6 +249,37 @@ body:not(.android) .android-only{display:none!important}
       <div class="master"><span class="small-label">Volume geral</span><input type="range" id="master" min="0" max="100" value="100" aria-label="Volume geral"></div>
     </div>
     <div class="deck" data-k="B" id="deckB"></div>
+  </section>
+
+  <section class="cifra" id="cifraSec" aria-label="Cifra">
+    <div class="cifra-head">
+      <h2 id="cifraTitle">Cifra</h2>
+      <div class="ctools" id="cifraTools">
+        <button data-f="air" aria-pressed="true">No ar</button><button data-f="A">Deck A</button><button data-f="B">Deck B</button>
+        <span style="width:8px"></span>
+        <button id="cfMinus" aria-label="Letra menor">A−</button><button id="cfPlus" aria-label="Letra maior">A+</button>
+        <button id="cfScroll">Rolar: parado</button>
+        <button id="cfEdit" class="primary" style="background:var(--fg);color:var(--bg);border-color:var(--fg)">Escrever cifra</button>
+      </div>
+    </div>
+    <div id="cifraView" class="cview"></div>
+    <div id="autoBox" class="autobox" hidden>
+      <div id="acBody" hidden>
+        <div class="acrow"><div class="acnow"><small>Agora</small><b id="acNow">—</b></div><div class="acnext"><small>Depois</small><b id="acNext">—</b><span id="acIn"></span></div></div>
+        <div class="acstrip" id="acStrip"></div>
+        <p class="note">Acordes descobertos automaticamente, como guia. Podem errar, principalmente acordes com sétima, nona ou diminutos. Para uma música em que você quer precisão, use “Escrever cifra”. <button id="acRedo" class="linkish">Refazer análise</button></p>
+      </div>
+      <div id="acEmpty" class="cview-empty" style="padding:28px 12px">
+        <div><b style="color:var(--fg)">Esta música ainda não tem acordes.</b><br>O app pode escutar a música e descobrir os acordes sozinho, em alguns segundos.</div>
+        <button id="acGo" class="primary" style="background:var(--fg);color:var(--bg);border-color:var(--fg);padding:12px 18px">Descobrir acordes automaticamente</button>
+      </div>
+    </div>
+    <div id="cifraEdit" class="cedit" hidden>
+      <p class="note">Cole ou escreva a cifra desta música, com os acordes em cifra americana na linha de cima da letra (C, Am, F, G7…). Quando você mudar o tom no deck, a cifra muda junto.</p>
+      <textarea id="cifraText" spellcheck="false" aria-label="Texto da cifra"></textarea>
+      <div class="row2"><span class="small-label">A cifra colada está em outro tom?</span><div class="stepper"><button id="csMinus" aria-label="Baixar meio tom da cifra">−</button><button id="csPlus" aria-label="Subir meio tom da cifra">+</button></div><output id="csVal" style="font-family:var(--f-mono)">0</output><span class="note">Ajuste até os acordes baterem com a música original.</span></div>
+      <div class="tools"><button class="primary" id="cfSave" style="background:var(--fg);color:var(--bg);border-color:var(--fg)">Salvar cifra</button><button id="cfCancel">Cancelar</button><button id="cfDelete" class="danger-btn">Apagar cifra</button></div>
+    </div>
   </section>
 
   <section class="telao" aria-label="Telão">
@@ -236,6 +315,7 @@ body:not(.android) .android-only{display:none!important}
 <input type="file" id="dirIn" webkitdirectory directory multiple hidden>
 <input type="file" id="fileIn" accept=".mp3,.wav,.wave,.mp4,.m4v,.webm,.mov,.mkv,audio/mpeg,audio/wav,audio/x-wav,video/mp4,video/webm,video/quicktime" multiple hidden>
 <div id="tFull" hidden><canvas id="cvFull" width="1920" height="1080"></canvas><div class="tbar"><button id="tFullFs">Tela cheia</button><button id="tBack">Voltar ao controle</button></div><div class="tvids" id="tVids"></div></div>
+<div id="diag" hidden><div class="diag-box"><div class="diag-head"><b>Diagnóstico</b><button id="diagClose">Fechar</button></div><p class="note">Tire uma foto desta tela e mande para o Claude.</p><pre id="diagText"></pre></div></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -309,9 +389,12 @@ const gainsFor=x=>[Math.cos(x*Math.PI/2),Math.sin(x*Math.PI/2)];
 
 async function ensureAudio(){
   if(ctx){if(ctx.state==='suspended')try{await ctx.resume();}catch(e){}return;}
-  ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const AC=window.AudioContext||window.webkitAudioContext;
+  try{ctx=new AC({latencyHint:'playback'});}catch(e){ctx=new AC();}
+  ctx.onstatechange=()=>dlog('Áudio: '+ctx.state);
   master=ctx.createGain();master.gain.value=$('#master').value/100;master.connect(ctx.destination);
-  try{const u=URL.createObjectURL(new Blob([WORKLET_SRC],{type:'application/javascript'}));await ctx.audioWorklet.addModule(u);useWorklet=true;}catch(e){useWorklet=false;}
+  try{const u=URL.createObjectURL(new Blob([WORKLET_SRC],{type:'application/javascript'}));await ctx.audioWorklet.addModule(u);useWorklet=true;}catch(e){useWorklet=false;dlog('Worklet indisponível: '+(e&&e.message));}
+  dlog('Áudio iniciado · '+ctx.sampleRate+' Hz · '+(useWorklet?'worklet':'script')+' · latência '+Math.round((ctx.baseLatency||0)*1000)+' ms');
   for(const d of Object.values(decks)){
     const src=ctx.createMediaElementSource(d.el);
     d.shift=makeShiftNode();d.volGain=ctx.createGain();d.xGain=ctx.createGain();d.an=ctx.createAnalyser();d.an.fftSize=1024;d.buf=new Float32Array(d.an.fftSize);
@@ -322,7 +405,7 @@ async function ensureAudio(){
 }
 function makeShiftNode(){
   if(useWorklet){const n=new AudioWorkletNode(ctx,'pitch-shift',{numberOfInputs:1,numberOfOutputs:1,outputChannelCount:[2]});n.setRatio=r=>n.port.postMessage(r);return n;}
-  const sp=ctx.createScriptProcessor(2048,2,2),S=makeShifter(ctx.sampleRate);
+  const sp=ctx.createScriptProcessor(4096,2,2),S=makeShifter(ctx.sampleRate);
   sp.onaudioprocess=e=>{const ib=e.inputBuffer,ob=e.outputBuffer,i0=ib.getChannelData(0),i1=ib.numberOfChannels>1?ib.getChannelData(1):i0;S.run(i0,i1,ob.getChannelData(0),ob.getChannelData(1));};
   sp.setRatio=r=>S.setRatio(r);return sp;
 }
@@ -350,14 +433,15 @@ function load(d,id){
   d.semi=s.semi||0;d.tempo=s.tempo||1;
   d.el.defaultPlaybackRate=d.tempo;d.el.playbackRate=d.tempo;
   if(d.shift)d.shift.setRatio(Math.pow(2,d.semi/12));
-  renderDecks();renderList();
+  renderDecks();renderList();renderCifra();
+  if(!ANDROID)setTimeout(()=>{if(d.songId!==id)return;if(!s.key)analyzeKey(s,false);if(!s.chords&&!s.cifra)analyzeChords(s,false);},1500);
 }
 function freeDeck(){
   const live=xf<0.5?decks.A:decks.B;const idle=other(live);
   if(!live.songId&&live.el.paused)return live;
   if(!isOnAir(idle))return idle; return null;
 }
-function setSemi(d,v){d.semi=Math.max(-12,Math.min(12,v));if(d.shift)d.shift.setRatio(Math.pow(2,d.semi/12));const s=songs.get(d.songId);if(s){s.semi=d.semi;saveSongLater(s);}renderDecks();renderList();}
+function setSemi(d,v){d.semi=Math.max(-12,Math.min(12,v));if(d.shift)d.shift.setRatio(Math.pow(2,d.semi/12));const s=songs.get(d.songId);if(s){s.semi=d.semi;saveSongLater(s);}renderDecks();renderList();renderCifra();}
 function setTempo(d,v){d.tempo=v;d.el.defaultPlaybackRate=v;d.el.playbackRate=v;const s=songs.get(d.songId);if(s){s.tempo=v;saveSongLater(s);}updateDeckLabels(d);renderList();}
 
 function setXf(x){
@@ -388,7 +472,7 @@ function finishFade(){
 }
 function curRep(){return state.reps.find(r=>r.id===state.cur)||null;}
 function loadNextInto(d,afterId){
-  const r=curRep();if(!r)return;const i=r.songIds.indexOf(afterId);const next=r.songIds[i+1];
+  const r=curRep();if(!r)return;const i=r.songIds.indexOf(afterId);if(i<0)return;const next=r.songIds[i+1];
   if(next&&songs.has(next)){load(d,next);toast('Próxima no deck '+d.k+': '+songs.get(next).name);}
 }
 
@@ -405,6 +489,7 @@ function buildDeck(d){
     <div class="deck-head"><div class="letter">${d.k}</div>
       <div class="titlebox"><div class="d-title"></div><div class="d-meta"></div></div>
       <span class="pill">No ar</span></div>
+    <div class="keyline"><span class="keychip unk">Tom —</span><button class="keybtn">Descobrir tom</button><button class="cifbtn">Cifra</button></div>
     <div class="vprev" hidden></div>
     <div class="times"><span class="t-el">0:00</span><span class="t-rem">-0:00</span></div>
     <div class="bar" role="slider" aria-label="Posição da música no deck ${d.k}" tabindex="0"><div class="warn"></div><div class="fill"></div></div>
@@ -421,7 +506,10 @@ function buildDeck(d){
       <input type="range" id="tempo${d.k}" class="tempo" min="80" max="120" step="1" value="100"><output class="tv">100%</output></div>
     <div class="ctl"><label for="vol${d.k}">Volume</label>
       <input type="range" id="vol${d.k}" class="vol" min="0" max="100" value="100"><output class="vv">100</output></div>`;
-  d.ui={root,title:root.querySelector('.d-title'),meta:root.querySelector('.d-meta'),el:root.querySelector('.t-el'),rem:root.querySelector('.t-rem'),bar:root.querySelector('.bar'),fill:root.querySelector('.fill'),warn:root.querySelector('.warn'),meter:root.querySelector('.meter span'),play:root.querySelector('.play'),semi:root.querySelector('.semi'),tempo:root.querySelector('.tempo'),tv:root.querySelector('.tv'),vol:root.querySelector('.vol'),vv:root.querySelector('.vv'),vprev:root.querySelector('.vprev')};
+  d.ui={root,title:root.querySelector('.d-title'),meta:root.querySelector('.d-meta'),el:root.querySelector('.t-el'),rem:root.querySelector('.t-rem'),bar:root.querySelector('.bar'),fill:root.querySelector('.fill'),warn:root.querySelector('.warn'),meter:root.querySelector('.meter span'),play:root.querySelector('.play'),semi:root.querySelector('.semi'),tempo:root.querySelector('.tempo'),tv:root.querySelector('.tv'),vol:root.querySelector('.vol'),vv:root.querySelector('.vv'),vprev:root.querySelector('.vprev'),key:root.querySelector('.keychip'),keybtn:root.querySelector('.keybtn')};
+  d.ui.keybtn.onclick=()=>{const s=songs.get(d.songId);if(s)analyzeKey(s,true);else toast('Carregue uma música no deck '+d.k);};
+  d.ui.key.onclick=()=>{const s=songs.get(d.songId);if(!s||!s.key)return;const k=s.key;s.key=k.mode==='maj'?{tonic:pc(k.tonic+9),mode:'min',conf:k.conf,manual:true}:{tonic:pc(k.tonic+3),mode:'maj',conf:k.conf,manual:true};putSong(s);renderDecks();renderList();renderCifra();toast('Tom trocado para '+keyName(s.key,0)+' ('+keyPt(s.key,0)+'). Toque de novo para voltar.');};
+  root.querySelector('.cifbtn').onclick=()=>{cifraFollow=d.k;renderCifra(true);$('#cifraSec').scrollIntoView({block:'start',behavior:'smooth'});};
   d.ui.vprev.appendChild(d.el);
   d.ui.play.onclick=()=>d.el.paused?play(d):pause(d);
   root.querySelector('.stop').onclick=()=>stop(d);
@@ -437,6 +525,9 @@ function buildDeck(d){
   d.ui.bar.addEventListener('pointermove',ev=>{if(ev.buttons)seek(ev);});
   d.ui.bar.addEventListener('keydown',ev=>{if(!isFinite(d.el.duration))return;if(ev.key==='ArrowRight'){d.el.currentTime=Math.min(d.el.duration,d.el.currentTime+5);ev.preventDefault();}if(ev.key==='ArrowLeft'){d.el.currentTime=Math.max(0,d.el.currentTime-5);ev.preventDefault();}});
   d.el.addEventListener('ended',()=>{renderDecks();renderList();});
+  ['play','playing','pause','waiting','stalled','ended','error','abort','emptied','seeking','seeked'].forEach(ev=>d.el.addEventListener(ev,()=>{
+    const er=d.el.error?(' erro '+d.el.error.code+(d.el.error.message?' '+d.el.error.message:'')):'';
+    dlog('Deck '+d.k+': '+ev+' em '+(d.el.currentTime||0).toFixed(1)+'s'+er);}));
   d.el.addEventListener('loadedmetadata',()=>{const s=songs.get(d.songId);if(s&&!s.dur&&isFinite(d.el.duration)){s.dur=d.el.duration;saveSongLater(s);renderList();}updateDeckLabels(d);});
 }
 function updateDeckLabels(d){
@@ -445,6 +536,8 @@ function updateDeckLabels(d){
   const dur=s?(isFinite(d.el.duration)?d.el.duration:s.dur):0;
   d.ui.vprev.hidden=!(s&&s.kind==='video');
   d.ui.meta.textContent=s?((s.kind==='video'?'vídeo · ':'')+fmt(dur/d.tempo)+' · tom '+semiTxt(d.semi)+' · '+Math.round(d.tempo*100)+'%'):'Escolha uma música no repertório abaixo';
+  if(s&&s.key){const orig=keyName(s.key,0),now=keyName(s.key,d.semi);d.ui.key.className='keychip';d.ui.key.innerHTML='Tom '+esc(now)+(d.semi?'<small>original '+esc(orig)+'</small>':'<small>'+esc(keyPt(s.key,0))+'</small>');d.ui.keybtn.hidden=true;}
+  else{d.ui.key.className='keychip unk';d.ui.key.textContent=s&&analyzing.has(s.id)?'Descobrindo o tom…':'Tom —';d.ui.keybtn.hidden=!s||analyzing.has(s.id);}
   d.ui.semi.textContent=semiTxt(d.semi);d.ui.tempo.value=Math.round(d.tempo*100);d.ui.tv.textContent=Math.round(d.tempo*100)+'%';
 }
 function renderDecks(){
@@ -461,7 +554,14 @@ function renderFadeBtn(){
   const target=fading?fading.target:(xf<0.5?1:0);
   $('#fadeLbl').textContent=fading?(target?'A → B …':'B → A …'):('FADE '+(target?'A → B':'B → A'));
 }
+let lastUi=0,lastFrame=0,screenVisible=true;
 function tick(){
+  const tnow=performance.now();
+  if(lastFrame&&tnow-lastFrame>700&&!document.hidden)dlog('Tela travou por '+Math.round(tnow-lastFrame)+' ms');
+  lastFrame=tnow;
+  const uiEvery=ANDROID?66:0;
+  if(tnow-lastUi<uiEvery){requestAnimationFrame(tick);return;}
+  lastUi=tnow;
   for(const d of Object.values(decks)){
     const dur=d.el.duration,cur=d.el.currentTime||0;
     if(d.songId&&isFinite(dur)&&dur>0){
@@ -477,10 +577,10 @@ function tick(){
   if(fading){const p=Math.min(1,(performance.now()-fading.start)/(fading.dur*1000));xv=fading.from+(fading.target-fading.from)*p;$('#xf').value=Math.round(xv*1000);$('#fadeProg').style.width=(p*100)+'%';}
   if(mode==='ctl'){
     const info={x:xv,A:{song:songs.get(decks.A.songId)},B:{song:songs.get(decks.B.songId)}};
-    drawScreen($('#cv'),decks.A.el,decks.B.el,info);
+    if(screenVisible||document.fullscreenElement)drawScreen($('#cv'),decks.A.el,decks.B.el,info);
     const now=performance.now();
-    if(bc&&now-lastBc>250){lastBc=now;const pk=d=>{const s=songs.get(d.songId);return {id:d.songId,name:s?s.name:'',kind:s?s.kind||'audio':'',t:d.el.currentTime||0,playing:!d.el.paused,rate:d.tempo};};try{bc.postMessage({type:'state',ts:Date.now(),x:xv,A:pk(decks.A),B:pk(decks.B)});}catch(e){}}
-    if(now-lastInfo>500){lastInfo=now;updateTelaoInfo();}
+    if(bc&&!ANDROID&&now-lastBc>250){lastBc=now;const pk=d=>{const s=songs.get(d.songId);return {id:d.songId,name:s?s.name:'',kind:s?s.kind||'audio':'',t:d.el.currentTime||0,playing:!d.el.paused,rate:d.tempo};};try{bc.postMessage({type:'state',ts:Date.now(),x:xv,A:pk(decks.A),B:pk(decks.B)});}catch(e){}}
+    if(now-lastInfo>500){lastInfo=now;updateTelaoInfo();if(cifraFollow==='air'&&!cifraEditing){const d=cifraDeck();if(d.songId!==cifraShownId)renderCifra();}}
   }
   requestAnimationFrame(tick);
 }
@@ -497,7 +597,7 @@ function renderReps(){
 function songRow(s,i,inRep,total){
   const miss=isMissing(s);const dir=s.path?s.path.split('/').slice(1,-1).join(' / '):'';
   const cls=(decks.A.songId===s.id?' inA':'')+(decks.B.songId===s.id?' inB':'')+(miss?' missing':'');
-  const meta=fmt(s.dur||0)+(s.semi?' · tom '+semiTxt(s.semi):'')+((s.tempo&&s.tempo!==1)?' · '+Math.round(s.tempo*100)+'%':'')+(s.kind==='video'?'<span class="kind">vídeo</span>':'')+(s.demo?'<span class="demo">demo</span>':'')+(dir?' · '+esc(dir):'')+(miss?' · <span class="miss">arquivo não conectado</span>':'');
+  const meta=fmt(s.dur||0)+(s.semi?' · tom '+semiTxt(s.semi):'')+((s.tempo&&s.tempo!==1)?' · '+Math.round(s.tempo*100)+'%':'')+(s.key?' · <span class="tagk">'+esc(keyName(s.key,s.semi||0))+'</span>':'')+(s.cifra?'<span class="kind">cifra</span>':s.chords?'<span class="kind">acordes</span>':'')+(s.kind==='video'?'<span class="kind">vídeo</span>':'')+(s.demo?'<span class="demo">demo</span>':'')+(dir?' · '+esc(dir):'')+(miss?' · <span class="miss">arquivo não conectado</span>':'');
   let acts=`<button class="go" data-act="free" data-id="${s.id}">Carregar</button><button class="la" data-act="A" data-id="${s.id}" aria-label="Carregar no deck A">A</button><button class="lb" data-act="B" data-id="${s.id}" aria-label="Carregar no deck B">B</button>`;
   if(inRep){
     acts+=`<button data-act="up" data-id="${s.id}" ${i===0?'disabled':''} aria-label="Subir na lista">↑</button><button data-act="down" data-id="${s.id}" ${i===total-1?'disabled':''} aria-label="Descer na lista">↓</button><button class="danger-btn" data-act="rm" data-id="${s.id}" aria-label="Tirar do repertório">✕</button>`;
@@ -532,7 +632,7 @@ function renderList(){
   }
   const tools=isLib
     ?`<button class="primary" id="connect3">${folderFiles.size?'Atualizar pasta':'Conectar pasta de músicas'}</button>${ANDROID?'':'<button id="addFiles">Adicionar arquivos soltos</button>'}`
-    :`${ANDROID?'':'<button class="primary" id="addFiles">Adicionar músicas / vídeos</button>'}<button id="fromLib">Da biblioteca</button><button id="renameBtn">Renomear</button><button class="danger-btn" id="delRep">Excluir repertório</button>`;
+    :`${ANDROID?'':'<button class="primary" id="addFiles">Adicionar músicas / vídeos</button>'}<button id="fromLib">Da biblioteca</button><button id="keyRep">Analisar tom e acordes</button><button id="renameBtn">Renomear</button><button class="danger-btn" id="delRep">Excluir repertório</button>`;
   let picker='';
   if(!isLib&&picking){
     const avail=[...songs.values()].filter(s=>!r.songIds.includes(s.id)).sort((a,b)=>a.name.localeCompare(b.name,'pt',{sensitivity:'base'}));
@@ -542,13 +642,14 @@ function renderList(){
     (ids.length||q?`<div class="empty-state">${q?'Nenhuma música com “'+esc(filter)+'”'+(isLib?'':' neste repertório'):'Nenhuma música nesta pasta'}.</div>`:`<div class="drop" id="dropZone"><strong style="display:block;color:var(--fg);font-family:var(--f-display);font-size:20px;font-weight:600">Arraste seus MP3, WAV ou vídeos de karaokê (MP4) para cá</strong>ou use “Adicionar músicas / vídeos”. A ordem da lista é a ordem do show.</div>`);
   const needFolder=state.folder&&!folderFiles.size&&ids.some(id=>isMissing(songs.get(id)));
   const banner=needFolder?`<div class="banner"><span>A pasta <b>${esc(state.folder.name)}</b> ainda não foi conectada nesta sessão. Conecte para poder tocar.</span><button class="primary" id="connect2" style="background:var(--fg);color:var(--bg);border-color:var(--fg)">Conectar pasta</button></div>`:'';
-  P.innerHTML=`${banner}<div class="list-head">${head}<div class="tools">${tools}</div></div>${picker}${(isLib||ids.length>0||songs.size>0)?`<div class="searchbox"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input class="search" id="search" placeholder="${isLib?'Buscar entre '+songs.size.toLocaleString('pt-BR')+' músicas: nome, artista ou pasta':'Buscar neste repertório e na biblioteca'}" value="${esc(filter)}" aria-label="Buscar música" autocomplete="off">${filter?'<button class="sclear" id="sclear" aria-label="Limpar busca">✕</button>':''}</div>`:''}${chips}${(q||folderFilter)?`<div class="rescount">${nFound.toLocaleString('pt-BR')} ${isLib?'encontrada'+(nFound===1?'':'s'):'neste repertório'}${extra.length?' · '+extra.length+' na biblioteca':''}</div>`:''}${(!isLib&&q)?'<div class="grouph">Neste repertório</div>':''}<div class="rows" id="rows">${rows}</div>${extra.length?`<div class="grouph">Na biblioteca</div><div class="rows">${extra.slice(0,60).map((s,i)=>songRow(s,i,false,0)).join('')}</div>${extra.length>60?'<p class="note">Mostrando 60. Escreva mais palavras para achar mais rápido.</p>':''}`:''}${cut?`<p class="note">Mostrando ${LIM} de ${cut}. Use a busca para achar as outras.</p>`:''}`;
+  P.innerHTML=`${banner}<div class="list-head">${head}<div class="tools">${tools}</div></div>${picker}${(isLib||ids.length>0||songs.size>0)?`<div class="searchbox"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input class="search" id="search" placeholder="${isLib?'Buscar entre '+songs.size.toLocaleString('pt-BR')+' músicas: nome, artista ou pasta':'Buscar neste repertório e na biblioteca'}" value="${esc(filter)}" aria-label="Buscar música" autocomplete="off">${filter?'<button class="sclear" id="sclear" aria-label="Limpar busca">✕</button>':''}${ANDROID?'<button class="smic" id="smic" aria-label="Buscar falando">'+MIC+'</button>':''}</div>`:''}${chips}${(q||folderFilter)?`<div class="rescount">${nFound.toLocaleString('pt-BR')} ${isLib?'encontrada'+(nFound===1?'':'s'):'neste repertório'}${extra.length?' · '+extra.length+' na biblioteca':''}</div>`:''}${(!isLib&&q)?'<div class="grouph">Neste repertório</div>':''}<div class="rows" id="rows">${rows}</div>${extra.length?`<div class="grouph">Na biblioteca</div><div class="rows">${extra.slice(0,60).map((s,i)=>songRow(s,i,false,0)).join('')}</div>${extra.length>60?'<p class="note">Mostrando 60. Escreva mais palavras para achar mais rápido.</p>':''}`:''}${cut?`<p class="note">Mostrando ${LIM} de ${cut}. Use a busca para achar as outras.</p>`:''}`;
   wireList();
 }
 function wireList(){
   const P=$('#listPanel');
   if($('#addFiles'))$('#addFiles').onclick=()=>$('#fileIn').click();
   const r=curRep();
+  if($('#keyRep'))$('#keyRep').onclick=analyzeRepAll;
   if($('#fromLib'))$('#fromLib').onclick=()=>{picking=!picking;renderList();};
   if($('#renameBtn'))$('#renameBtn').onclick=()=>{renaming=true;renderList();const i=$('#renameIn');i.focus();i.select();};
   if($('#renameForm')){$('#renameForm').onsubmit=e=>{e.preventDefault();const v=$('#renameIn').value.trim();if(v){r.name=v;saveState();}renaming=false;renderList();};$('#renameCancel').onclick=()=>{renaming=false;renderList();};}
@@ -559,6 +660,7 @@ function wireList(){
   if($('#pkAdd'))$('#pkAdd').onclick=()=>{const sel=[...P.querySelectorAll('.picker input:checked')].map(i=>i.value);r.songIds.push(...sel);picking=false;saveState();renderList();if(sel.length)toast(sel.length+' música(s) adicionada(s)');};
   const se=$('#search');if(se){se.oninput=e=>{filter=e.target.value;const pos=e.target.selectionStart;clearTimeout(searchT);searchT=setTimeout(()=>{renderList();const n=$('#search');if(n){n.focus();n.setSelectionRange(pos,pos);}},120);};
     se.onkeydown=e=>{if(e.key==='Escape'){filter='';renderList();$('#search')?.focus();}if(e.key==='Enter'){const b=P.querySelector('.row [data-act="free"]');if(b)b.click();}};}
+  if($('#smic'))$('#smic').onclick=voiceSearch;
   if($('#sclear'))$('#sclear').onclick=()=>{filter='';renderList();$('#search')?.focus();};
   if($('#chips'))$('#chips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;folderFilter=b.dataset.f;renderList();};
   P.querySelectorAll('[data-act]').forEach(b=>{
@@ -639,10 +741,10 @@ $('#dirIn').onchange=e=>{connectFolder(e.target.files);e.target.value='';};
 
 /* ---------- PC -> tablet ---------- */
 function exportData(){
-  const pack=s=>({name:s.name,path:s.path||'',file:String(s.path||s.name).split('/').pop(),semi:s.semi||0,tempo:s.tempo||1});
+  const pack=s=>({name:s.name,path:s.path||'',file:String(s.path||s.name).split('/').pop(),semi:s.semi||0,tempo:s.tempo||1,key:s.key||null,cifra:s.cifra||'',cifraShift:s.cifraShift||0,chords:s.chords||null});
   return {app:'palco-player',version:1,exported:Date.now(),fadeSecs:state.fadeSecs,autoNext:state.autoNext,
     reps:state.reps.map(r=>({name:r.name,songs:r.songIds.map(id=>songs.get(id)).filter(Boolean).map(pack)})),
-    ajustes:[...songs.values()].filter(s=>(s.semi||0)!==0||(s.tempo||1)!==1).map(pack)};
+    ajustes:[...songs.values()].filter(s=>(s.semi||0)!==0||(s.tempo||1)!==1||s.key||s.cifra||s.chords).map(pack)};
 }
 async function sendToTablet(){
   if(!state.reps.length){toast('Crie um repertório antes de enviar');return;}
@@ -658,7 +760,7 @@ function importData(d){
   for(const s of songs.values()){if(s.path){byPath.set(norm(s.path.split('/').slice(1).join('/')),s);byFile.set(norm(s.path.split('/').pop()),s);}}
   const find=x=>byPath.get(norm(String(x.path).split('/').slice(1).join('/')))||byFile.get(norm(x.file));
   let miss=0;const touched=new Set();
-  const apply=x=>{const s=find(x);if(!s){miss++;return null;}if((s.semi||0)!==x.semi||(s.tempo||1)!==x.tempo){s.semi=x.semi;s.tempo=x.tempo;touched.add(s);}return s.id;};
+  const apply=x=>{const s=find(x);if(!s){miss++;return null;}if((s.semi||0)!==x.semi||(s.tempo||1)!==x.tempo){s.semi=x.semi;s.tempo=x.tempo;touched.add(s);}if(x.key&&!s.key){s.key=x.key;touched.add(s);}if(x.chords&&!s.chords){s.chords=x.chords;touched.add(s);}if(x.cifra&&x.cifra!==s.cifra){s.cifra=x.cifra;s.cifraShift=x.cifraShift||0;touched.add(s);}return s.id;};
   (d.ajustes||[]).forEach(apply);
   for(const r of d.reps){const ids=r.songs.map(apply).filter(Boolean);const ex=state.reps.find(x=>norm(x.name)===norm(r.name));if(ex)ex.songIds=ids;else state.reps.push({id:uid(),name:r.name,songIds:ids});}
   touched.forEach(s=>putSong(s));
@@ -793,6 +895,229 @@ function exitTelao(){
   document.body.classList.remove('tmode');$('#tFull').hidden=true;renderAll();
 }
 
+/* ---------- tom da música ---------- */
+const KMAJ=['C','Db','D','Eb','E','F','F#','G','Ab','A','Bb','B'],KMIN=['Cm','C#m','Dm','Ebm','Em','Fm','F#m','Gm','G#m','Am','Bbm','Bm'];
+const PTMAJ=['Dó','Ré bemol','Ré','Mi bemol','Mi','Fá','Fá sustenido','Sol','Lá bemol','Lá','Si bemol','Si'],PTMIN=['Dó','Dó sustenido','Ré','Mi bemol','Mi','Fá','Fá sustenido','Sol','Sol sustenido','Lá','Si bemol','Si'];
+const pc=(t)=>((t%12)+12)%12;
+function keyName(k,shift){const t=pc(k.tonic+(shift||0));return k.mode==='min'?KMIN[t]:KMAJ[t];}
+function keyPt(k,shift){const t=pc(k.tonic+(shift||0));return k.mode==='min'?PTMIN[t]+' menor':PTMAJ[t]+' maior';}
+const KEY_WORKER=`
+function fft(re,im){const n=re.length;for(let i=1,j=0;i<n;i++){let bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){let t=re[i];re[i]=re[j];re[j]=t;t=im[i];im[i]=im[j];im[j]=t;}}
+for(let len=2;len<=n;len<<=1){const ang=-2*Math.PI/len,wr=Math.cos(ang),wi=Math.sin(ang),h=len>>1;for(let i=0;i<n;i+=len){let cr=1,ci=0;for(let j=0;j<h;j++){const a=i+j,b=a+h,xr=re[b]*cr-im[b]*ci,xi=re[b]*ci+im[b]*cr;re[b]=re[a]-xr;im[b]=im[a]-xi;re[a]+=xr;im[a]+=xi;const t=cr*wr-ci*wi;ci=cr*wi+ci*wr;cr=t;}}}}
+onmessage=e=>{const x=e.data.x,sr=e.data.sr,N=8192,hop=4096,win=new Float64Array(N);for(let i=0;i<N;i++)win[i]=0.5-0.5*Math.cos(2*Math.PI*i/N);
+const bp=new Int8Array(N/2).fill(-1);for(let k=1;k<N/2;k++){const f=k*sr/N;if(f<60||f>2100)continue;const m=69+12*Math.log2(f/440),r=Math.round(m);if(Math.abs(m-r)<0.4)bp[k]=((r%12)+12)%12;}
+const tot=new Float64Array(12),re=new Float64Array(N),im=new Float64Array(N),fr=Math.max(0,Math.floor((x.length-N)/hop));
+for(let f=0;f<fr;f++){const o=f*hop;let en=0;for(let i=0;i<N;i++){const v=x[o+i]*win[i];re[i]=v;im[i]=0;en+=v*v;}if(en<1e-3)continue;fft(re,im);const c=new Float64Array(12);for(let k=1;k<N/2;k++){const p=bp[k];if(p>=0)c[p]+=Math.sqrt(re[k]*re[k]+im[k]*im[k]);}let mx=0;for(let i=0;i<12;i++)if(c[i]>mx)mx=c[i];if(mx>0)for(let i=0;i<12;i++)tot[i]+=c[i]/mx;}
+const MAJ=[6.35,2.23,3.48,2.33,4.38,4.09,2.52,5.19,2.39,3.66,2.29,2.88],MIN=[6.33,2.68,3.52,5.38,2.60,3.53,2.54,4.75,3.98,2.69,3.34,3.17],a=Array.from(tot);
+const corr=(p,t)=>{let ma=0,mb=0;for(let i=0;i<12;i++){ma+=a[i];mb+=p[i];}ma/=12;mb/=12;let n=0,da=0,db=0;for(let i=0;i<12;i++){const u=a[i]-ma,v=p[((i-t)%12+12)%12]-mb;n+=u*v;da+=u*u;db+=v*v;}return n/Math.sqrt((da*db)||1);};
+const res=[];for(let t=0;t<12;t++){res.push({tonic:t,mode:'maj',r:corr(MAJ,t)});res.push({tonic:t,mode:'min',r:corr(MIN,t)});}
+res.sort((p,q)=>q.r-p.r);postMessage({tonic:res[0].tonic,mode:res[0].mode,r:res[0].r,gap:res[0].r-res[1].r,frames:fr});};`;
+const analyzing=new Set();let keyQueue=Promise.resolve();
+let decCache={id:null,x:null};
+async function decodeMono(s){
+  if(decCache.id===s.id&&decCache.x)return decCache.x;
+  const ref=s.blob||folderFiles.get(s.id);if(!ref)throw new Error('arquivo não conectado');
+  const buf=typeof ref==='string'?await (await fetch(ref)).arrayBuffer():await ref.arrayBuffer();
+  const oc=new OfflineAudioContext(1,1,22050);
+  const ab=await new Promise((ok,bad)=>{const pr=oc.decodeAudioData(buf,ok,bad);if(pr&&pr.catch)pr.catch(bad);});
+  const max=Math.min(ab.length,22050*480),x=new Float32Array(max);
+  for(let c=0;c<ab.numberOfChannels;c++){const d=ab.getChannelData(c);for(let i=0;i<max;i++)x[i]+=d[i]/ab.numberOfChannels;}
+  decCache={id:s.id,x};return x;
+}
+function analyzeKey(s,manual){
+  if(!s||analyzing.has(s.id))return keyQueue;
+  analyzing.add(s.id);renderDecks();
+  keyQueue=keyQueue.then(async()=>{
+    try{
+      const full=await decodeMono(s);const x=full.slice(0,Math.min(full.length,22050*240));
+      const res=await new Promise((ok,bad)=>{const w=new Worker(URL.createObjectURL(new Blob([KEY_WORKER],{type:'text/javascript'})));w.onmessage=e=>{ok(e.data);w.terminate();};w.onerror=e=>{bad(new Error(e.message||'falha na análise'));w.terminate();};w.postMessage({x,sr:22050},[x.buffer]);});
+      if(!res.frames)throw new Error('música muito curta ou sem som');
+      s.key={tonic:res.tonic,mode:res.mode,conf:Math.round(res.gap*1000)/1000};
+      putSong(s);dlog('Tom de '+s.name+': '+keyName(s.key,0)+' (confiança '+s.key.conf+')');
+      if(manual)toast('Tom de “'+s.name+'”: '+keyName(s.key,0)+' ('+keyPt(s.key,0)+')');
+    }catch(e){dlog('Tom não descoberto: '+s.name+' · '+(e&&e.message));if(manual)toast('Não consegui descobrir o tom: '+(e&&e.message||'erro'));}
+    finally{analyzing.delete(s.id);renderDecks();renderList();renderCifra();}
+  });
+  return keyQueue;
+}
+async function analyzeRep(){
+  const r=curRep();if(!r)return;const todo=r.songIds.map(id=>songs.get(id)).filter(s=>s&&!s.key&&!isMissing(s));
+  if(!todo.length){toast('Todas as músicas deste repertório já têm o tom');return;}
+  toast('Descobrindo o tom de '+todo.length+' música(s)…');
+  for(const s of todo)await analyzeKey(s,false);
+  toast('Pronto: tom descoberto em '+todo.filter(s=>s.key).length+' de '+todo.length);
+}
+
+/* ---------- acordes automáticos ---------- */
+const CHORD_WORKER=`
+function fft(re,im){const n=re.length;for(let i=1,j=0;i<n;i++){let bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){let t=re[i];re[i]=re[j];re[j]=t;t=im[i];im[i]=im[j];im[j]=t;}}
+for(let len=2;len<=n;len<<=1){const ang=-2*Math.PI/len,wr=Math.cos(ang),wi=Math.sin(ang),h=len>>1;for(let i=0;i<n;i+=len){let cr=1,ci=0;for(let j=0;j<h;j++){const a=i+j,b=a+h,xr=re[b]*cr-im[b]*ci,xi=re[b]*ci+im[b]*cr;re[b]=re[a]-xr;im[b]=im[a]-xi;re[a]+=xr;im[a]+=xi;const t=cr*wr-ci*wi;ci=cr*wi+ci*wr;cr=t;}}}}
+onmessage=e=>{const x=e.data.x,sr=e.data.sr,key=e.data.key,N=4096,hop=2048,SEG=5,win=new Float64Array(N);for(let i=0;i<N;i++)win[i]=0.5-0.5*Math.cos(2*Math.PI*i/N);
+const bp=new Int8Array(N/2).fill(-1),bw=new Float64Array(N/2);for(let k=1;k<N/2;k++){const f=k*sr/N;if(f<90||f>1600)continue;const m=69+12*Math.log2(f/440),r=Math.round(m);if(Math.abs(m-r)<0.45){bp[k]=((r%12)+12)%12;bw[k]=f<250?1.3:1;}}
+const re=new Float64Array(N),im=new Float64Array(N),fr=Math.max(0,Math.floor((x.length-N)/hop)),ns=Math.floor(fr/SEG);
+const segs=[],en=new Float64Array(ns);let emax=0;
+for(let s=0;s<ns;s++){const c=new Float64Array(12);for(let q=0;q<SEG;q++){const o=(s*SEG+q)*hop;let e2=0;for(let i=0;i<N;i++){const v=x[o+i]*win[i];re[i]=v;im[i]=0;e2+=v*v;}en[s]+=e2;if(e2<1e-5)continue;fft(re,im);for(let k=1;k<N/2;k++){const p=bp[k];if(p>=0)c[p]+=bw[k]*Math.log(1+20*Math.sqrt(re[k]*re[k]+im[k]*im[k]));}}
+let n=0;for(let i=0;i<12;i++)n+=c[i]*c[i];n=Math.sqrt(n)||1;for(let i=0;i<12;i++)c[i]/=n;segs.push(c);if(en[s]>emax)emax=en[s];}
+const T=[];for(let r=0;r<12;r++){for(const third of [4,3]){const t=new Float64Array(12);for(const [iv,w] of [[0,1],[third,0.9],[7,0.9]]){const n=(r+iv)%12;t[n]+=w;t[(n+7)%12]+=w*0.36;t[(n+4)%12]+=w*0.13;}let n=0;for(let i=0;i<12;i++)n+=t[i]*t[i];n=Math.sqrt(n);for(let i=0;i<12;i++)t[i]/=n;T.push(t);}}
+const dia=new Float64Array(24);if(key){const t=key.tonic,add=(r,m)=>{dia[(((r%12)+12)%12)*2+(m?1:0)]=0.07;};if(key.mode==='maj'){add(t,0);add(t+5,0);add(t+7,0);add(t+2,1);add(t+4,1);add(t+9,1);}else{add(t,1);add(t+5,1);add(t+7,1);add(t+7,0);add(t+3,0);add(t+8,0);add(t+10,0);}}
+const S=25,PEN=0.18,sc=new Float64Array(S);let prev=new Float64Array(S),bt=[];
+for(let s=0;s<ns;s++){const c=segs[s],quiet=en[s]<emax*0.003;for(let k=0;k<24;k++){let d=0;const t=T[k];for(let i=0;i<12;i++)d+=c[i]*t[i];sc[k]=quiet?0:d+dia[k];}sc[24]=quiet?1:0.35;
+let best=0;for(let k=1;k<S;k++)if(prev[k]>prev[best])best=k;const cur=new Float64Array(S),b=new Int8Array(S);for(let k=0;k<S;k++){const stay=prev[k],sw=prev[best]-PEN;if(s===0||stay>=sw){cur[k]=stay+sc[k];b[k]=k;}else{cur[k]=sw+sc[k];b[k]=best;}}bt.push(b);prev=cur;}
+const path=new Int8Array(ns);if(ns){let k=0;for(let i=1;i<S;i++)if(prev[i]>prev[k])k=i;for(let s=ns-1;s>=0;s--){path[s]=k;k=bt[s][k];}}
+const segT=SEG*hop/sr,ev=[];for(let s=0;s<ns;s++){const c=path[s]===24?-1:path[s];if(!ev.length||ev[ev.length-1][1]!==c)ev.push([Math.round(s*segT*100)/100,c]);}
+const out=[];for(let i=0;i<ev.length;i++){const len=(i+1<ev.length?ev[i+1][0]:ns*segT)-ev[i][0];if(len<0.9&&out.length){continue;}if(out.length&&out[out.length-1][1]===ev[i][1])continue;out.push(ev[i]);}
+postMessage({ev:out,segs:ns});};`;
+const chording=new Set();
+function chordName(c,shift,flats){if(c<0)return '—';const r=pc((c>>1)+(shift||0));return (flats?FLAT:SHARP)[r]+((c&1)?'m':'');}
+function analyzeChords(s,manual){
+  if(!s||chording.has(s.id))return keyQueue;
+  chording.add(s.id);renderCifra(true);
+  if(!s.key)analyzeKey(s,false);
+  keyQueue=keyQueue.then(async()=>{
+    try{
+      const x=(await decodeMono(s)).slice();
+      const res=await new Promise((ok,bad)=>{const w=new Worker(URL.createObjectURL(new Blob([CHORD_WORKER],{type:'text/javascript'})));w.onmessage=e=>{ok(e.data);w.terminate();};w.onerror=e=>{bad(new Error(e.message||'falha na análise'));w.terminate();};w.postMessage({x,sr:22050,key:s.key||null},[x.buffer]);});
+      if(!res.ev||!res.ev.length)throw new Error('não encontrei acordes');
+      s.chords={v:1,ev:res.ev};putSong(s);
+      dlog('Acordes de '+s.name+': '+res.ev.length+' trocas');
+      if(manual)toast('Acordes de “'+s.name+'” prontos');
+    }catch(e){dlog('Acordes não descobertos: '+s.name+' · '+(e&&e.message));if(manual)toast('Não consegui descobrir os acordes: '+(e&&e.message||'erro'));}
+    finally{chording.delete(s.id);renderCifra(true);renderList();}
+  });
+  return keyQueue;
+}
+function chordAt(ev,t){let lo=0,hi=ev.length-1,ans=-1;while(lo<=hi){const m=(lo+hi)>>1;if(ev[m][0]<=t+0.15){ans=m;lo=m+1;}else hi=m-1;}return ans;}
+let autoLast='';
+function updateAutoChords(){
+  const box=$('#autoBox');if(!box||box.hidden)return;
+  const d=cifraDeck(),s=songs.get(d.songId);if(!s||!s.chords)return;
+  const ev=s.chords.ev,t=(d.el.currentTime||0),i=chordAt(ev,t),kn=s.key?keyName(s.key,d.semi):'',flats=kn?FLAT_KEYS.has(kn):false;
+  const nm=k=>k>=0&&k<ev.length?chordName(ev[k][1],d.semi,flats):'—';
+  const nx=[];for(let k=i+1;k<ev.length&&nx.length<8;k++)if(ev[k][1]>=0)nx.push(k);
+  const sig=d.k+i+'|'+d.semi+'|'+s.id+'|'+Math.floor(t);
+  if(sig===autoLast)return;autoLast=sig;
+  $('#acNow').textContent=i>=0?nm(i):'—';
+  const n1=nx[0];$('#acNext').textContent=n1!==undefined?nm(n1):'—';
+  $('#acIn').textContent=n1!==undefined?'em '+Math.max(0,Math.ceil(ev[n1][0]-t))+' s':'';
+  $('#acStrip').innerHTML=nx.slice(1).map(k=>'<span><b>'+esc(nm(k))+'</b><i>'+fmt(ev[k][0])+'</i></span>').join('');
+}
+async function analyzeRepAll(){
+  const r=curRep();if(!r)return;const todo=r.songIds.map(id=>songs.get(id)).filter(s=>s&&(!s.key||!s.chords)&&!isMissing(s));
+  if(!todo.length){toast('Todas as músicas deste repertório já foram analisadas');return;}
+  toast('Analisando tom e acordes de '+todo.length+' música(s)… pode continuar usando o app');
+  for(const s of todo){if(!s.key)await analyzeKey(s,false);if(!s.chords)await analyzeChords(s,false);}
+  decCache={id:null,x:null};
+  toast('Pronto: '+todo.filter(s=>s.chords).length+' de '+todo.length+' músicas analisadas');
+}
+
+/* ---------- cifra ---------- */
+const SHARP=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'],FLAT=['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+const NOTE={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+const CHORD_RE=/^([A-G])([#b]?)((?:maj|min|dim|aug|sus|add|m|M|\u00ba|\u00b0|\+|-|[0-9]|\(|\)|#|b|\/(?=[0-9]))*)(?:\/([A-G])([#b]?))?$/;
+const FLAT_KEYS=new Set(['F','Bb','Eb','Ab','Db','Gb','Dm','Gm','Cm','Fm','Bbm','Ebm']);
+let cifraFollow='air',cifraEditing=false,cifraEditShift=0,cifraShownId=null,scrollSpeed=0;
+function trChord(tok,shift,flats){
+  const m=CHORD_RE.exec(tok);if(!m)return null;
+  const names=flats?FLAT:SHARP;
+  const root=names[pc(NOTE[m[1]]+(m[2]==='#'?1:m[2]==='b'?-1:0)+shift)];
+  const bass=m[4]?'/'+names[pc(NOTE[m[4]]+(m[5]==='#'?1:m[5]==='b'?-1:0)+shift)]:'';
+  return root+m[3]+bass;
+}
+function isChordLine(line){
+  const toks=line.trim().split(/\s+/).filter(Boolean);if(!toks.length)return false;
+  let ch=0,other=0;for(const t of toks){if(/^[|\-–()x0-9:.]+$/i.test(t))continue;if(CHORD_RE.test(t))ch++;else other++;}
+  return ch>0&&ch>=other*2;
+}
+function renderCifraText(text,shift,flats){
+  return text.split(/\r?\n/).map(line=>{
+    if(!isChordLine(line)){const sec=/^\s*\[.*\]\s*$/.test(line)||/^\s*(intro|refr[ãa]o|ponte|solo|final|verso|parte)\b/i.test(line);return sec?'<span class="sec">'+esc(line)+'</span>':esc(line);}
+    let out='',debt=0;const re=/(\s+)|(\S+)/g;let m;
+    while((m=re.exec(line))){
+      if(m[1]){let sp=m[1].length-debt;debt=0;if(sp<1){debt=1-sp;sp=1;}out+=' '.repeat(sp);continue;}
+      const t=trChord(m[2],shift,flats);
+      if(t){out+='<span class="ch">'+esc(t)+'</span>';debt+=Math.max(0,t.length-m[2].length);if(t.length<m[2].length)out+=' '.repeat(m[2].length-t.length);}
+      else out+=esc(m[2]);
+    }
+    return out;
+  }).join('\n');
+}
+function cifraDeck(){if(cifraFollow==='A')return decks.A;if(cifraFollow==='B')return decks.B;return xf<0.5?decks.A:decks.B;}
+function renderCifra(force){
+  const sec=$('#cifraSec');if(!sec)return;
+  const d=cifraDeck(),s=songs.get(d.songId);
+  if(!force&&cifraEditing)return;
+  $('#cifraTools').querySelectorAll('[data-f]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===cifraFollow));
+  const v=$('#cifraView');v.style.fontSize=(state.cifraFont||18)+'px';v.classList.toggle('deckB',d.k==='B');
+  if(!s){$('#autoBox').hidden=true;v.hidden=cifraEditing;$('#cifraTitle').innerHTML='Cifra<small>Deck '+d.k+' vazio</small>';v.className='cview cview-empty'+(d.k==='B'?' deckB':'');v.innerHTML='<div>Carregue uma música no deck '+d.k+' para ver a cifra.</div>';$('#cfEdit').disabled=true;cifraShownId=null;return;}
+  $('#cfEdit').disabled=false;$('#cfEdit').textContent=s.cifra?'Editar cifra':'Escrever cifra';
+  const shift=(s.cifraShift||0)+(d.semi||0);
+  const kn=s.key?keyName(s.key,d.semi):null;
+  $('#cifraTitle').innerHTML=esc(s.name)+'<small>Deck '+d.k+(kn?' · tom '+esc(kn):'')+(d.semi?' · transposta '+semiTxt(d.semi)+' semitom(ns)':'')+'</small>';
+  const flats=kn?FLAT_KEYS.has(kn):/[A-G]b/.test(s.cifra||'');
+  const ab=$('#autoBox');ab.classList.toggle('deckB',d.k==='B');
+  if(!s.cifra){
+    v.hidden=true;ab.hidden=false;autoLast='';
+    if(s.chords){$('#acBody').hidden=false;$('#acEmpty').hidden=true;$('#acRedo').hidden=false;updateAutoChords();}
+    else{$('#acBody').hidden=true;$('#acEmpty').hidden=false;$('#acRedo').hidden=true;
+      const busy=chording.has(s.id);$('#acGo').disabled=busy;$('#acGo').textContent=busy?'Descobrindo os acordes…':'Descobrir acordes automaticamente';}
+  }
+  else{ab.hidden=true;if(!cifraEditing)v.hidden=false;v.className='cview'+(d.k==='B'?' deckB':'');v.innerHTML=renderCifraText(s.cifra,shift,flats);}
+  if(cifraShownId!==s.id){v.scrollTop=0;cifraShownId=s.id;}
+}
+function openCifraEditor(){
+  const d=cifraDeck(),s=songs.get(d.songId);if(!s)return;
+  cifraEditing=true;cifraEditShift=s.cifraShift||0;$('#csVal').textContent=semiTxt(cifraEditShift);
+  $('#cifraText').value=s.cifra||'';$('#cifraEdit').hidden=false;$('#cifraView').hidden=true;$('#autoBox').hidden=true;$('#cifraText').focus();
+  $('#cfDelete').hidden=!s.cifra;
+}
+function closeCifraEditor(save){
+  const d=cifraDeck(),s=songs.get(d.songId);
+  if(save&&s){s.cifra=$('#cifraText').value.replace(/\t/g,'    ');s.cifraShift=cifraEditShift;putSong(s);toast('Cifra salva');}
+  cifraEditing=false;$('#cifraEdit').hidden=true;$('#cifraView').hidden=false;renderCifra(true);renderList();
+}
+let lastScroll=0;
+function scrollLoop(t){if(scrollSpeed&&!cifraEditing){const v=$('#cifraView');if(lastScroll)v.scrollTop+=scrollSpeed*(t-lastScroll)/1000;}lastScroll=t;requestAnimationFrame(scrollLoop);}
+
+/* ---------- busca por voz (app Android) ---------- */
+const MIC='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>';
+function voiceSearch(){if(!ANDROID)return;try{PalcoAndroid.voice();}catch(e){toast('Busca por voz indisponível neste tablet');}}
+window.onPalcoVoice=t=>{
+  t=String(t||'').trim();if(!t)return;
+  view='lib';folderFilter='';picking=false;renaming=false;filter=t;renderList();
+  const n=[...songs.values()].filter(s=>matchQ(s,norm(t).split(/\s+/).filter(Boolean))).length;
+  toast('“'+t+'”: '+n+' música'+(n===1?'':'s'));
+  document.getElementById('listPanel').scrollIntoView({block:'start'});
+};
+
+/* ---------- vigia: se um deck parar sozinho, tenta continuar ---------- */
+const watch={A:{t:-1,since:0,tries:0},B:{t:-1,since:0,tries:0}};
+setInterval(()=>{
+  for(const d of Object.values(decks)){
+    const w=watch[d.k];
+    if(!d.songId||d.el.paused||d.el.ended||d.el.seeking){w.t=-1;w.tries=0;continue;}
+    const t=d.el.currentTime;
+    if(t!==w.t){w.t=t;w.since=performance.now();if(t>1)w.tries=0;continue;}
+    const stuck=performance.now()-w.since;
+    if(stuck>3000&&w.tries<3){
+      w.tries++;w.since=performance.now();
+      dlog('Deck '+d.k+' parado em '+t.toFixed(1)+'s (pronto '+d.el.readyState+', rede '+d.el.networkState+(d.el.error?', erro '+d.el.error.code:'')+'). Tentativa '+w.tries+' de continuar.');
+      const at=t;try{d.el.load();d.el.currentTime=at;d.el.play().catch(e=>dlog('Deck '+d.k+': não voltou ('+e.message+')'));}catch(e){dlog('Deck '+d.k+': erro ao recuperar '+e.message);}
+    }
+  }
+},1000);
+
+/* ---------- diagnóstico ---------- */
+const dlogs=[];
+function dlog(m){const t=new Date();dlogs.push(t.toTimeString().slice(0,8)+'  '+m);if(dlogs.length>80)dlogs.shift();const el=$('#diagText');if(el&&!$('#diag').hidden)el.textContent=diagText();}
+function diagText(){
+  const st=d=>'Deck '+d.k+': '+(d.songId?(songs.get(d.songId)?.name||'?'):'vazio')+' · '+(d.el.paused?'parado':'tocando')+' · '+(d.el.currentTime||0).toFixed(1)+'s/'+(isFinite(d.el.duration)?d.el.duration.toFixed(1):'?')+'s · pronto '+d.el.readyState+' · rede '+d.el.networkState+(d.el.error?' · ERRO '+d.el.error.code:'');
+  return ['Palco Player · '+(ANDROID?'app Android':'navegador'),
+    'Áudio: '+(ctx?ctx.state+' · '+(useWorklet?'worklet':'script'):'ainda não iniciado'),
+    st(decks.A),st(decks.B),'Pasta: '+folderFiles.size+' arquivos','',...dlogs.slice(-40).reverse()].join('\n');
+}
+window.addEventListener('error',e=>dlog('Erro: '+e.message));
+window.addEventListener('unhandledrejection',e=>dlog('Erro: '+(e.reason&&e.reason.message||e.reason)));
+
 /* ---------- boot ---------- */
 async function boot(){
   buildDeck(decks.A);buildDeck(decks.B);
@@ -803,6 +1128,26 @@ async function boot(){
   $('#fadeBtn').onclick=autoFade;
   $('#tFs').onclick=()=>goFull($('#screen'));
   $('#asTelao').onclick=enterTelao;
+  $('#voiceBtn').innerHTML=MIC+'Buscar falando';$('#voiceBtn').onclick=voiceSearch;
+  $('#cifraTools').querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{cifraFollow=b.dataset.f;if(cifraEditing)closeCifraEditor(false);renderCifra(true);});
+  $('#cfMinus').onclick=()=>{state.cifraFont=Math.max(12,(state.cifraFont||18)-2);saveState();renderCifra(true);};
+  $('#cfPlus').onclick=()=>{state.cifraFont=Math.min(40,(state.cifraFont||18)+2);saveState();renderCifra(true);};
+  const speeds=[0,12,22,36],slabel=['parado','lento','médio','rápido'];let si=0;
+  $('#cfScroll').onclick=()=>{si=(si+1)%speeds.length;scrollSpeed=speeds[si];$('#cfScroll').textContent='Rolar: '+slabel[si];$('#cfScroll').setAttribute('aria-pressed',si>0);};
+  $('#cfEdit').onclick=openCifraEditor;
+  $('#acGo').onclick=()=>{const s=songs.get(cifraDeck().songId);if(s)analyzeChords(s,true);};
+  $('#acRedo').onclick=()=>{const s=songs.get(cifraDeck().songId);if(s){delete s.chords;analyzeChords(s,true);}};
+  setInterval(updateAutoChords,150);
+  $('#cfSave').onclick=()=>closeCifraEditor(true);
+  $('#cfCancel').onclick=()=>closeCifraEditor(false);
+  armButton($('#cfDelete'),'Confirmar',()=>{$('#cifraText').value='';closeCifraEditor(true);});
+  $('#csMinus').onclick=()=>{cifraEditShift--;$('#csVal').textContent=semiTxt(cifraEditShift);};
+  $('#csPlus').onclick=()=>{cifraEditShift++;$('#csVal').textContent=semiTxt(cifraEditShift);};
+  requestAnimationFrame(scrollLoop);
+  $('#diagBtn').onclick=()=>{$('#diag').hidden=false;$('#diagText').textContent=diagText();};
+  $('#diagClose').onclick=()=>{$('#diag').hidden=true;};
+  try{new IntersectionObserver(es=>{screenVisible=es[0].isIntersecting;}).observe($('#screen'));}catch(e){}
+  if(ANDROID){const c=$('#cv');c.width=960;c.height=540;}
   $('#connectBtn').onclick=()=>pickFolder();
   $('#sendTablet').onclick=sendToTablet;
   $('#tFullFs').onclick=()=>goFull($('#tFull'));
@@ -838,6 +1183,6 @@ async function boot(){
   if(location.hash==='#telao')enterTelao();
   if(ANDROID){try{PalcoAndroid.restore();}catch(e){}}
 }
-function renderAll(){renderDecks();renderFadeBtn();renderList();}
+function renderAll(){renderDecks();renderFadeBtn();renderList();renderCifra();}
 boot();
 </script>

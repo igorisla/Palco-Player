@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.DocumentsContract;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -46,6 +48,7 @@ public class MainActivity extends Activity {
     static final String HOST = "appassets.androidplatform.net";
     static final String BASE = "https://" + HOST;
     static final int REQ_TREE = 42;
+    static final int REQ_VOICE = 43;
 
     WebView web;
     SharedPreferences prefs;
@@ -158,6 +161,13 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int req, int res, Intent data) {
         super.onActivityResult(req, res, data);
+        if (req == REQ_VOICE) {
+            if (res != RESULT_OK || data == null) return;
+            ArrayList<String> r = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (r != null && !r.isEmpty())
+                js("window.onPalcoVoice&&window.onPalcoVoice(" + JSONObject.quote(r.get(0)) + ")");
+            return;
+        }
         if (req != REQ_TREE) return;
         if (res != RESULT_OK || data == null || data.getData() == null) return;
         Uri tree = data.getData();
@@ -176,6 +186,19 @@ public class MainActivity extends Activity {
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             try { startActivityForResult(i, REQ_TREE); }
             catch (ActivityNotFoundException e) { jsError("Este tablet não abriu a escolha de pastas"); }
+        });
+    }
+
+    // ---------- busca por voz ----------
+    void openVoice() {
+        runOnUiThread(() -> {
+            Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "pt-BR");
+            i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Fale o cantor ou o nome da música");
+            i.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+            try { startActivityForResult(i, REQ_VOICE); }
+            catch (ActivityNotFoundException e) { jsError("Este tablet não tem o reconhecimento de voz do Google"); }
         });
     }
 
@@ -379,6 +402,8 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface public String files() { return filesJson; }
+
+        @JavascriptInterface public void voice() { openVoice(); }
     }
 
     @Override
