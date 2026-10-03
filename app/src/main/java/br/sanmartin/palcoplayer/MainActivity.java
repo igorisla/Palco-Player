@@ -1,6 +1,8 @@
 package br.sanmartin.palcoplayer;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -49,6 +52,8 @@ public class MainActivity extends Activity {
     static final String BASE = "https://" + HOST;
     static final int REQ_TREE = 42;
     static final int REQ_VOICE = 43;
+    static final int REQ_MIC = 44;
+    PermissionRequest pendingMic;
 
     WebView web;
     SharedPreferences prefs;
@@ -96,6 +101,23 @@ public class MainActivity extends Activity {
         });
 
         web.setWebChromeClient(new WebChromeClient() {
+            // microfone para "Ouvir o teclado"
+            @Override
+            public void onPermissionRequest(PermissionRequest request) {
+                runOnUiThread(() -> {
+                    boolean wantsMic = false;
+                    for (String r : request.getResources())
+                        if (PermissionRequest.RESOURCE_AUDIO_CAPTURE.equals(r)) wantsMic = true;
+                    if (!wantsMic) { request.deny(); return; }
+                    if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+                        request.grant(new String[]{PermissionRequest.RESOURCE_AUDIO_CAPTURE});
+                    } else {
+                        pendingMic = request;
+                        requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQ_MIC);
+                    }
+                });
+            }
+
             // tela cheia do telão
             @Override
             public void onShowCustomView(View view, CustomViewCallback callback) {
@@ -120,6 +142,16 @@ public class MainActivity extends Activity {
 
         if (saved != null) web.restoreState(saved);
         else web.loadUrl(BASE + "/assets/www/index.html");
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int req, String[] perms, int[] res) {
+        super.onRequestPermissionsResult(req, perms, res);
+        if (req != REQ_MIC || pendingMic == null) return;
+        if (res.length > 0 && res[0] == PackageManager.PERMISSION_GRANTED)
+            pendingMic.grant(new String[]{PermissionRequest.RESOURCE_AUDIO_CAPTURE});
+        else pendingMic.deny();
+        pendingMic = null;
     }
 
     @Override

@@ -205,11 +205,11 @@ body:not(.android) .android-only{display:none!important}
 .autobox{background:var(--bg);border-radius:10px;padding:16px;display:grid;gap:12px;--cc:var(--a)}
 .autobox.deckB{--cc:var(--b)}
 .acrow{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:12px}
-.acnow,.acnext{border-radius:12px;padding:12px 16px;border:1px solid var(--line);display:grid;align-content:center;min-height:150px}
+.acnow,.acnext{border-radius:12px;padding:10px 14px;border:1px solid var(--line);display:grid;align-content:center;min-height:100px}
 .acnow{border-color:var(--cc)}
 .acnow small,.acnext small{font-family:var(--f-display);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:14px}
-.acnow b{font-family:var(--f-display);font-weight:700;font-size:clamp(64px,11vw,128px);line-height:1;color:var(--cc)}
-.acnext b{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,6vw,72px);line-height:1}
+.acnow b{font-family:var(--f-display);font-weight:700;font-size:clamp(40px,6vw,76px);line-height:1;color:var(--cc)}
+.acnext b{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,4vw,48px);line-height:1}
 .acnext span{color:var(--muted);font-family:var(--f-mono);font-size:14px}
 .acstrip{display:flex;gap:6px;flex-wrap:wrap}
 .acstrip span{border:1px solid var(--line);border-radius:8px;padding:6px 12px;display:grid;justify-items:center}
@@ -239,14 +239,42 @@ body:not(.android) .android-only{display:none!important}
 .diag-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;width:min(760px,100%);max-height:90%;display:grid;gap:8px;grid-template-rows:auto auto minmax(0,1fr)}
 .diag-head{display:flex;justify-content:space-between;align-items:center}
 .diag-box pre{margin:0;overflow:auto;font-family:var(--f-mono);font-size:12px;line-height:1.5;white-space:pre-wrap;background:var(--bg);border-radius:8px;padding:10px}
+ #stage{position:fixed;inset:0;z-index:15;background:#000;display:grid;grid-template-columns:minmax(0,1fr) clamp(170px,22vw,280px)}
+#stage[hidden]{display:none}
+.st-video{position:relative;min-width:0;min-height:0;background:#000}
+.st-video canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.st-side{background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;gap:8px;padding:10px;padding-top:calc(10px + env(safe-area-inset-top,0px));overflow:auto;--cc:var(--a)}
+.st-side.deckB{--cc:var(--b)}
+.st-side small{font-family:var(--f-display);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:11px}
+.st-head{display:flex;justify-content:space-between;gap:6px;align-items:flex-start}
+.st-head span{font-family:var(--f-display);font-weight:600;font-size:14px;line-height:1.15;overflow-wrap:anywhere;min-width:0}
+.st-head button{padding:4px 8px;font-size:12px}
+.st-box{border:1px solid var(--line);border-radius:10px;padding:8px}
+.st-now{border-color:var(--cc)}
+.st-now b{display:block;font-family:var(--f-display);font-weight:700;font-size:clamp(30px,4.2vw,48px);line-height:1;color:var(--cc)}
+.st-next b{font-family:var(--f-display);font-weight:700;font-size:clamp(20px,2.6vw,30px);line-height:1}
+.st-next span{font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-left:6px}
+.st-side .kbwrap{margin-top:4px}.st-side .kb{width:100%;max-width:260px;height:auto}
+.st-listen{--cc:#9C7BE0}
+@media (orientation:portrait){.st-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.st-head,.st-ctrl,.st-cifra{grid-column:1/-1}}
+.st-strip{display:flex;flex-wrap:wrap;gap:4px}
+.st-strip span{border:1px solid var(--line);border-radius:6px;padding:2px 6px;font-family:var(--f-display);font-weight:700;font-size:15px}
+.st-cifra{margin:0;font-family:var(--f-mono);font-size:12px;line-height:1.35;white-space:pre;overflow:auto;flex:1;min-height:120px;background:var(--bg);border-radius:8px;padding:8px}
+.st-cifra .ch{color:var(--cc);font-weight:700}
+.st-listen{border-color:#9C7BE0}.st-listen b{display:block;font-family:var(--f-display);font-weight:700;font-size:clamp(26px,3.4vw,40px);line-height:1;color:#B9A1F0}
+.st-ctrl{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.st-ctrl button{flex:1;padding:8px 6px;font-size:13px}
+.st-ctrl .on{background:#9C7BE0;color:#fff;border-color:#9C7BE0}
+.st-time{font-family:var(--f-mono);font-size:13px;color:var(--muted);width:100%;text-align:center}
+@media (orientation:portrait){#stage{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}.st-side{border-left:0;border-top:1px solid var(--line);max-height:42vh}}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;max-width:calc(100% - 32px);z-index:10}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
 <div class="app">
   <header class="top">
-    <div class="brand"><i></i>Palco Player <span class="ver">versão 4</span></div>
-    <div class="tools" style="align-items:center"><span class="hint web-only"><kbd>Espaço</kbd> fade · <kbd>/</kbd> buscar música</span><button id="voiceBtn" class="android-only">Buscar falando</button><button id="diagBtn">Diagnóstico</button><button id="asTelao" class="web-only">Usar esta janela como telão</button></div>
+    <div class="brand"><i></i>Palco Player <span class="ver">versão 5</span></div>
+    <div class="tools" style="align-items:center"><span class="hint web-only"><kbd>Espaço</kbd> fade · <kbd>/</kbd> buscar música</span><button id="stageBtn">Modo palco</button><button id="voiceBtn" class="android-only">Buscar falando</button><button id="diagBtn">Diagnóstico</button><button id="asTelao" class="web-only">Usar esta janela como telão</button></div>
   </header>
 
   <section class="console" aria-label="Decks e mixer">
@@ -331,6 +359,20 @@ body:not(.android) .android-only{display:none!important}
 <input type="file" id="fileIn" accept=".mp3,.wav,.wave,.mp4,.m4v,.webm,.mov,.mkv,audio/mpeg,audio/wav,audio/x-wav,video/mp4,video/webm,video/quicktime" multiple hidden>
 <div id="tFull" hidden><canvas id="cvFull" width="1920" height="1080"></canvas><div class="tbar"><button id="tFullFs">Tela cheia</button><button id="tBack">Voltar ao controle</button></div><div class="tvids" id="tVids"></div></div>
 <div id="diag" hidden><div class="diag-box"><div class="diag-head"><b>Diagnóstico</b><button id="diagClose">Fechar</button></div><p class="note">Tire uma foto desta tela e mande para o Claude.</p><pre id="diagText"></pre></div></div>
+<div id="stage" hidden>
+  <div class="st-video"><canvas id="cvStage" width="1280" height="720"></canvas></div>
+  <aside class="st-side" id="stSide">
+    <div class="st-head"><span id="stSong">—</span><button id="stClose">Sair</button></div>
+    <div id="stAuto">
+      <div class="st-box st-now"><small>Agora</small><b id="stNow">—</b><div id="stNowKb"></div></div>
+      <div class="st-box st-next" style="margin-top:6px"><small>Depois</small><br><b id="stNext">—</b><span id="stIn"></span></div>
+      <div class="st-strip" id="stStrip" style="margin-top:6px"></div>
+    </div>
+    <pre class="st-cifra" id="stCifra" hidden></pre>
+    <div class="st-box st-listen" id="stListen" hidden><small>Ouvindo o teclado</small><b id="stHeard">—</b><div id="stHeardKb"></div></div>
+    <div class="st-ctrl"><button id="stPlay">Tocar / pausar</button><button id="stFade">FADE</button><button id="stMic" class="android-only">Ouvir teclado</button><div class="st-time" id="stTime"></div></div>
+  </aside>
+</div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -599,7 +641,8 @@ function tick(){
   if(fading){const p=Math.min(1,(performance.now()-fading.start)/(fading.dur*1000));xv=fading.from+(fading.target-fading.from)*p;$('#xf').value=Math.round(xv*1000);$('#fadeProg').style.width=(p*100)+'%';}
   if(mode==='ctl'){
     const info={x:xv,A:{song:songs.get(decks.A.songId)},B:{song:songs.get(decks.B.songId)}};
-    if(screenVisible||document.fullscreenElement)drawScreen($('#cv'),decks.A.el,decks.B.el,info);
+    if(stageOpen)drawScreen($('#cvStage'),decks.A.el,decks.B.el,info);
+    else if(screenVisible||document.fullscreenElement)drawScreen($('#cv'),decks.A.el,decks.B.el,info);
     const now=performance.now();
     if(bc&&!ANDROID&&now-lastBc>250){lastBc=now;const pk=d=>{const s=songs.get(d.songId);return {id:d.songId,name:s?s.name:'',kind:s?s.kind||'audio':'',t:d.el.currentTime||0,playing:!d.el.paused,rate:d.tempo};};try{bc.postMessage({type:'state',ts:Date.now(),x:xv,A:pk(decks.A),B:pk(decks.B)});}catch(e){}}
     if(now-lastInfo>500){lastInfo=now;updateTelaoInfo();if(cifraFollow==='air'&&!cifraEditing){const d=cifraDeck();if(d.songId!==cifraShownId)renderCifra();}}
@@ -1160,6 +1203,65 @@ function closeCifraEditor(save){
 let lastScroll=0;
 function scrollLoop(t){if(scrollSpeed&&!cifraEditing){const v=$('#cifraView');if(lastScroll)v.scrollTop+=scrollSpeed*(t-lastScroll)/1000;}lastScroll=t;requestAnimationFrame(scrollLoop);}
 
+/* ---------- modo palco: vídeo grande + acordes pequenos ao lado ---------- */
+let stageOpen=false,stLast='';
+function openStage(){stageOpen=true;$('#stage').hidden=false;stLast='';updateStage();goFull($('#stage'));}
+function closeStage(){stageOpen=false;$('#stage').hidden=true;try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}}
+function chordView(d,s){
+  const kn=s&&s.key?keyName(s.key,d.semi):'',flats=kn?FLAT_KEYS.has(kn):false;
+  if(!s||!s.chords||(s.chords.v||1)<3)return {flats,ok:false};
+  const ev=s.chords.ev,t=d.el.currentTime||0,i=chordAt(ev,t),cv=s.chords.v;
+  const nm=k=>k>=0&&k<ev.length?chordName(ev[k][1],d.semi,flats,cv):'—';
+  const nx=[];for(let k=i+1;k<ev.length&&nx.length<6;k++)if(ev[k][1]>=0)nx.push(k);
+  return {ok:true,flats,i,now:i>=0?nm(i):'—',next:nx[0]!==undefined?nm(nx[0]):'—',inS:nx[0]!==undefined?Math.max(0,Math.ceil(ev[nx[0]][0]-t)):null,later:nx.slice(1).map(nm)};
+}
+function updateStage(){
+  if(!stageOpen)return;
+  const d=cifraDeck(),s=songs.get(d.songId),side=$('#stSide');side.classList.toggle('deckB',d.k==='B');
+  $('#stSong').textContent=s?s.name:'Nada no ar';
+  const dur=d.el.duration,cur=d.el.currentTime||0;$('#stTime').textContent=s&&isFinite(dur)?fmt(cur/d.tempo)+' / -'+fmt((dur-cur)/d.tempo):'';
+  if(s&&s.cifra){$('#stAuto').hidden=true;$('#stCifra').hidden=false;const sig='c'+s.id+d.semi;if(sig!==stLast){stLast=sig;const kn=s.key?keyName(s.key,d.semi):'';$('#stCifra').innerHTML=renderCifraText(s.cifra,(s.cifraShift||0)+(d.semi||0),kn?FLAT_KEYS.has(kn):/[A-G]b/.test(s.cifra));}
+    if(scrollSpeed){$('#stCifra').scrollTop=$('#cifraView').scrollTop*($('#stCifra').scrollHeight/Math.max(1,$('#cifraView').scrollHeight));}return;}
+  $('#stAuto').hidden=false;$('#stCifra').hidden=true;
+  const v=chordView(d,s);
+  if(!v.ok){$('#stNow').textContent='—';$('#stNext').textContent=s?'Sem acordes':'—';$('#stIn').textContent='';$('#stStrip').innerHTML='';$('#stNowKb').innerHTML='';return;}
+  const sig=s.id+'|'+v.i+'|'+d.semi+'|'+v.inS;if(sig===stLast)return;stLast=sig;
+  $('#stNow').textContent=v.now;$('#stNext').textContent=v.next;$('#stIn').textContent=v.inS!=null?'em '+v.inS+' s':'';
+  $('#stStrip').innerHTML=v.later.map(n=>'<span>'+esc(n)+'</span>').join('');
+  $('#stNowKb').innerHTML=state.showKb!==false&&v.now!=='—'?kbSVG(v.now,false,v.flats):'';
+}
+
+/* ---------- ouvir o teclado pelo microfone (app Android) ---------- */
+let mic=null;
+const LT=(()=>{const Q=[[0,4,7],[0,3,7],[0,4,7,10],[0,3,7,10]],T=[];for(let r=0;r<12;r++)for(let q=0;q<4;q++){const t=new Float64Array(12);for(const iv of Q[q]){const wv=iv===10?0.6:iv===0?1:0.9,n=(r+iv)%12;t[n]+=wv;t[(n+7)%12]+=wv*0.36;t[(n+4)%12]+=wv*0.13;}let n=0;for(let i=0;i<12;i++)n+=t[i]*t[i];n=Math.sqrt(n);for(let i=0;i<12;i++)t[i]/=n;T.push(t);}return T;})();
+async function toggleMic(){
+  if(mic){stopMic();return;}
+  try{
+    await ensureAudio();
+    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+    const src=ctx.createMediaStreamSource(stream),an=ctx.createAnalyser();an.fftSize=16384;an.smoothingTimeConstant=0;src.connect(an);
+    const sr=ctx.sampleRate,N=an.fftSize,bins=new Float32Array(N/2),bp=new Int8Array(N/2).fill(-1),bw=new Float32Array(N/2);
+    for(let k=1;k<N/2;k++){const f=k*sr/N;if(f<110||f>1760)continue;const m=69+12*Math.log2(f/440),r=Math.round(m),dv=Math.abs(m-r);if(dv<0.35){bp[k]=((r%12)+12)%12;bw[k]=(1-dv/0.35)*(f<262?1.2:1);}}
+    mic={stream,src,an,bins,bp,bw,avg:new Float64Array(12),cur:-1,cand:-1,candN:0,timer:null};
+    mic.timer=setInterval(listenTick,180);
+    $('#stListen').hidden=false;$('#stMic').classList.add('on');$('#stMic').textContent='Parar de ouvir';
+    toast('Ouvindo o teclado pelo microfone');
+  }catch(e){toast('Não consegui usar o microfone: '+(e&&e.message||'permissão negada'));dlog('Microfone: '+(e&&e.message));}
+}
+function stopMic(){if(!mic)return;clearInterval(mic.timer);mic.stream.getTracks().forEach(t=>t.stop());try{mic.src.disconnect();}catch(e){}mic=null;$('#stListen').hidden=true;$('#stMic').classList.remove('on');$('#stMic').textContent='Ouvir teclado';}
+function listenTick(){
+  if(!mic)return;const {an,bins,bp,bw,avg}=mic;an.getFloatFrequencyData(bins);
+  const c=new Float64Array(12);let e=0;for(let k=1;k<bins.length;k++){const p=bp[k];if(p<0)continue;const m=Math.pow(10,bins[k]/20);e+=m*m;c[p]+=bw[k]*Math.log(1+2000*m);}
+  if(e<1e-7){mic.cur=-1;$('#stHeard').textContent='…';$('#stHeardKb').innerHTML='';return;}
+  let n=0;for(let i=0;i<12;i++){avg[i]=avg[i]*0.45+c[i]*0.55;n+=avg[i]*avg[i];}n=Math.sqrt(n)||1;
+  let best=-1,bs=-9;for(let k=0;k<48;k++){let dd=0;for(let i=0;i<12;i++)dd+=avg[i]/n*LT[k][i];if(k%4>=2)dd-=0.04;if(dd>bs){bs=dd;best=k;}}
+  if(best===mic.cur){mic.candN=0;return;}
+  if(best===mic.cand)mic.candN++;else{mic.cand=best;mic.candN=1;}
+  if(mic.candN<2)return;
+  mic.cur=best;const d=cifraDeck(),s=songs.get(d.songId),kn=s&&s.key?keyName(s.key,d.semi):'',fl=kn?FLAT_KEYS.has(kn):false;
+  const name=chordName(best,0,fl,3);$('#stHeard').textContent=name;$('#stHeardKb').innerHTML=state.showKb!==false?kbSVG(name,false,fl):'';
+}
+
 /* ---------- busca por voz (app Android) ---------- */
 const MIC='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>';
 function voiceSearch(){if(!ANDROID)return;try{PalcoAndroid.voice();}catch(e){toast('Busca por voz indisponível neste tablet');}}
@@ -1221,7 +1323,12 @@ async function boot(){
   $('#cfKb').onclick=()=>{state.showKb=state.showKb===false;saveState();kbLbl();autoLast='';renderCifra(true);updateAutoChords();};
   $('#acGo').onclick=()=>{const s=songs.get(cifraDeck().songId);if(s)analyzeChords(s,true);};
   $('#acRedo').onclick=()=>{const s=songs.get(cifraDeck().songId);if(s){delete s.chords;analyzeChords(s,true);}};
-  setInterval(updateAutoChords,150);
+  setInterval(()=>{updateAutoChords();updateStage();},150);
+  $('#stageBtn').onclick=openStage;$('#stClose').onclick=closeStage;
+  $('#stFade').onclick=autoFade;
+  $('#stPlay').onclick=()=>{const d=xf<0.5?decks.A:decks.B;d.el.paused?play(d):pause(d);};
+  $('#stMic').onclick=toggleMic;
+  if(ANDROID){const c=$('#cvStage');c.width=960;c.height=540;}
   $('#cfSave').onclick=()=>closeCifraEditor(true);
   $('#cfCancel').onclick=()=>closeCifraEditor(false);
   armButton($('#cfDelete'),'Confirmar',()=>{$('#cifraText').value='';closeCifraEditor(true);});
@@ -1242,7 +1349,7 @@ async function boot(){
   $('#libBtn').onclick=()=>{view='lib';picking=false;renaming=false;filter='';folderFilter='';renderList();$('#search')?.focus();};
   $('#repList').onclick=e=>{const b=e.target.closest('[data-rep]');if(!b)return;view='rep';state.cur=b.dataset.rep;picking=false;renaming=false;filter='';saveState();renderList();};
   $('#newRepForm').onsubmit=e=>{e.preventDefault();const v=$('#newRepName').value.trim();if(!v)return;const r={id:uid(),name:v,songIds:[]};state.reps.push(r);state.cur=r.id;view='rep';$('#newRepName').value='';saveState();renderList();};
-  document.addEventListener('keydown',e=>{if(e.key==='/'&&mode==='ctl'&&!e.target.matches('input,select,textarea')){const n=$('#search');if(n){e.preventDefault();n.focus();n.select();n.scrollIntoView({block:'center'});}return;}if(e.code!=='Space'||mode!=='ctl')return;const t=e.target;if(t.matches('input,select,textarea,button,[contenteditable]'))return;e.preventDefault();autoFade();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&stageOpen){closeStage();return;}if(e.key==='/'&&mode==='ctl'&&!e.target.matches('input,select,textarea')){const n=$('#search');if(n){e.preventDefault();n.focus();n.select();n.scrollIntoView({block:'center'});}return;}if(e.code!=='Space'||mode!=='ctl')return;const t=e.target;if(t.matches('input,select,textarea,button,[contenteditable]'))return;e.preventDefault();autoFade();});
 
   idb=await idbOpen();
   const saved=await tx('kv','readonly',st=>st.get('state'));
