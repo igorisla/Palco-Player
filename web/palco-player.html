@@ -273,7 +273,7 @@ body:not(.android) .android-only{display:none!important}
 
 <div class="app">
   <header class="top">
-    <div class="brand"><i></i>Palco Player <span class="ver">versão 5</span></div>
+    <div class="brand"><i></i>Palco Player <span class="ver">versão 6</span></div>
     <div class="tools" style="align-items:center"><span class="hint web-only"><kbd>Espaço</kbd> fade · <kbd>/</kbd> buscar música</span><button id="stageBtn">Modo palco</button><button id="voiceBtn" class="android-only">Buscar falando</button><button id="diagBtn">Diagnóstico</button><button id="asTelao" class="web-only">Usar esta janela como telão</button></div>
   </header>
 
@@ -483,17 +483,18 @@ async function play(d){
     if(o.el.paused)setXf(side);
     else toast('Deck '+d.k+' tocando sem som: o crossfader está no '+o.k+'. Use FADE para passar.');
   }
-  try{await d.el.play();}catch(e){toast('Não foi possível tocar este arquivo');}
+  d.wantPlay=true;
+  try{await d.el.play();}catch(e){if(!d.el.error)toast('Não foi possível tocar este arquivo');}
   if(!wakeLock&&navigator.wakeLock)navigator.wakeLock.request('screen').then(l=>{wakeLock=l;l.addEventListener('release',()=>wakeLock=null);}).catch(()=>{});
   renderDecks();renderList();
 }
-function pause(d){d.el.pause();renderDecks();renderList();}
-function stop(d){d.el.pause();try{d.el.currentTime=0;}catch(e){}renderDecks();renderList();}
+function pause(d){d.wantPlay=false;d.el.pause();renderDecks();renderList();}
+function stop(d){d.wantPlay=false;d.el.pause();try{d.el.currentTime=0;}catch(e){}renderDecks();renderList();}
 function load(d,id){
   const s=songs.get(id);if(!s)return;
   const ref=s.blob||folderFiles.get(s.id);if(!ref){toast('Conecte a pasta de músicas para tocar “'+s.name+'”');return;}
   if(isOnAir(d)){toast('O deck '+d.k+' está no ar. Carregue no deck '+other(d).k+'.');return;}
-  d.el.pause();if(d.url&&d.url.startsWith('blob:'))URL.revokeObjectURL(d.url);
+  d.wantPlay=false;d.lastT=0;d.rec=null;d.el.pause();if(d.url&&d.url.startsWith('blob:'))URL.revokeObjectURL(d.url);
   d.url=typeof ref==='string'?ref:URL.createObjectURL(ref);d.el.src=d.url;d.songId=id;
   d.semi=s.semi||0;d.tempo=s.tempo||1;
   d.el.defaultPlaybackRate=d.tempo;d.el.playbackRate=d.tempo;
@@ -530,7 +531,7 @@ async function autoFade(){
 }
 function finishFade(){
   const f=fading;if(!f)return;clearInterval(f.iv);fading=null;xf=f.target;applyVolumes(xf);$('#xf').value=Math.round(xf*1000);$('#fadeProg').style.width='0';
-  f.out.el.pause();try{f.out.el.currentTime=0;}catch(e){}
+  f.out.wantPlay=false;f.out.el.pause();try{f.out.el.currentTime=0;}catch(e){}
   if(state.autoNext)loadNextInto(f.out,f.inc.songId);
   renderDecks();renderFadeBtn();renderList();
 }
@@ -538,6 +539,24 @@ function curRep(){return state.reps.find(r=>r.id===state.cur)||null;}
 function loadNextInto(d,afterId){
   const r=curRep();if(!r)return;const i=r.songIds.indexOf(afterId);if(i<0)return;const next=r.songIds[i+1];
   if(next&&songs.has(next)){load(d,next);toast('Próxima no deck '+d.k+': '+songs.get(next).name);}
+}
+
+/* ---------- recuperação: se o aparelho derrubar o decodificador, continua do mesmo ponto ---------- */
+function recoverDeck(d){
+  const err=d.el.error;if(!err||!d.songId||!d.url||d.recovering)return;
+  const now=performance.now();if(!d.rec||now-d.rec.t0>60000)d.rec={n:0,t0:now};
+  if(d.rec.n>=6){dlog('Deck '+d.k+': falhou 6 vezes em 1 minuto, parei de tentar');toast('Deck '+d.k+': não consegui continuar esta música');d.wantPlay=false;renderDecks();return;}
+  d.rec.n++;d.recovering=true;
+  const at=Math.max(0,(d.lastT||0)+0.15*d.rec.n),wasPlaying=d.wantPlay,src=d.url,id=d.songId;
+  dlog('Deck '+d.k+': erro '+err.code+' em '+(d.lastT||0).toFixed(1)+'s · recarregando e voltando em '+at.toFixed(1)+'s (tentativa '+d.rec.n+')');
+  const done=()=>{d.recovering=false;};
+  setTimeout(()=>{
+    if(d.songId!==id){done();return;}
+    const onMeta=()=>{try{d.el.currentTime=at;}catch(e){}d.el.playbackRate=d.tempo;if(wasPlaying){d.el.play().then(()=>{dlog('Deck '+d.k+': voltou a tocar');}).catch(e=>dlog('Deck '+d.k+': não voltou ('+e.message+')'));}done();renderDecks();};
+    d.el.addEventListener('loadedmetadata',onMeta,{once:true});
+    d.el.removeAttribute('src');d.el.load();d.el.src=src;d.el.load();
+    setTimeout(()=>{if(d.recovering){d.el.removeEventListener('loadedmetadata',onMeta);done();}},8000);
+  },120);
 }
 
 /* ---------- deck UI ---------- */
@@ -588,7 +607,8 @@ function buildDeck(d){
   d.ui.bar.addEventListener('pointerdown',ev=>{seek(ev);d.ui.bar.setPointerCapture(ev.pointerId);});
   d.ui.bar.addEventListener('pointermove',ev=>{if(ev.buttons)seek(ev);});
   d.ui.bar.addEventListener('keydown',ev=>{if(!isFinite(d.el.duration))return;if(ev.key==='ArrowRight'){d.el.currentTime=Math.min(d.el.duration,d.el.currentTime+5);ev.preventDefault();}if(ev.key==='ArrowLeft'){d.el.currentTime=Math.max(0,d.el.currentTime-5);ev.preventDefault();}});
-  d.el.addEventListener('ended',()=>{renderDecks();renderList();});
+  d.el.addEventListener('ended',()=>{d.wantPlay=false;renderDecks();renderList();});
+  d.el.addEventListener('error',()=>recoverDeck(d));
   ['play','playing','pause','waiting','stalled','ended','error','abort','emptied','seeking','seeked'].forEach(ev=>d.el.addEventListener(ev,()=>{
     const er=d.el.error?(' erro '+d.el.error.code+(d.el.error.message?' '+d.el.error.message:'')):'';
     dlog('Deck '+d.k+': '+ev+' em '+(d.el.currentTime||0).toFixed(1)+'s'+er);}));
@@ -627,7 +647,7 @@ function tick(){
   if(tnow-lastUi<uiEvery){requestAnimationFrame(tick);return;}
   lastUi=tnow;
   for(const d of Object.values(decks)){
-    const dur=d.el.duration,cur=d.el.currentTime||0;
+    const dur=d.el.duration,cur=d.el.currentTime||0;if(!d.el.error&&!d.recovering&&cur>0)d.lastT=cur;
     if(d.songId&&isFinite(dur)&&dur>0){
       d.ui.el.textContent=fmt(cur/d.tempo);d.ui.rem.textContent='-'+fmt((dur-cur)/d.tempo);
       d.ui.fill.style.width=(cur/dur*100)+'%';
@@ -1205,7 +1225,7 @@ function scrollLoop(t){if(scrollSpeed&&!cifraEditing){const v=$('#cifraView');if
 
 /* ---------- modo palco: vídeo grande + acordes pequenos ao lado ---------- */
 let stageOpen=false,stLast='';
-function openStage(){stageOpen=true;$('#stage').hidden=false;stLast='';updateStage();goFull($('#stage'));}
+function openStage(){stageOpen=true;$('#stage').hidden=false;stLast='';updateStage();if(!ANDROID)goFull($('#stage'));}
 function closeStage(){stageOpen=false;$('#stage').hidden=true;try{if(document.fullscreenElement)document.exitFullscreen();}catch(e){}}
 function chordView(d,s){
   const kn=s&&s.key?keyName(s.key,d.semi):'',flats=kn?FLAT_KEYS.has(kn):false;
@@ -1278,7 +1298,7 @@ const watch={A:{t:-1,since:0,tries:0},B:{t:-1,since:0,tries:0}};
 setInterval(()=>{
   for(const d of Object.values(decks)){
     const w=watch[d.k];
-    if(!d.songId||d.el.paused||d.el.ended||d.el.seeking){w.t=-1;w.tries=0;continue;}
+    if(!d.songId||d.el.paused||d.el.ended||d.el.seeking||d.recovering){w.t=-1;w.tries=0;continue;}
     const t=d.el.currentTime;
     if(t!==w.t){w.t=t;w.since=performance.now();if(t>1)w.tries=0;continue;}
     const stuck=performance.now()-w.since;
@@ -1300,6 +1320,7 @@ function diagText(){
     st(decks.A),st(decks.B),'Pasta: '+folderFiles.size+' arquivos','',...dlogs.slice(-40).reverse()].join('\n');
 }
 window.addEventListener('error',e=>dlog('Erro: '+e.message));
+document.addEventListener('visibilitychange',()=>dlog('App '+(document.hidden?'em segundo plano':'de volta à tela')));
 window.addEventListener('unhandledrejection',e=>dlog('Erro: '+(e.reason&&e.reason.message||e.reason)));
 
 /* ---------- boot ---------- */
@@ -1310,7 +1331,7 @@ async function boot(){
   $('#fadeSecs').onclick=e=>{const b=e.target.closest('button');if(!b)return;state.fadeSecs=+b.dataset.s;syncSeg();saveState();};
   $('#autoNext').onchange=e=>{state.autoNext=e.target.checked;saveState();};
   $('#fadeBtn').onclick=autoFade;
-  $('#tFs').onclick=()=>goFull($('#screen'));
+  $('#tFs').onclick=()=>{if(ANDROID)openStage();else goFull($('#screen'));};
   $('#asTelao').onclick=enterTelao;
   $('#voiceBtn').innerHTML=MIC+'Buscar falando';$('#voiceBtn').onclick=voiceSearch;
   $('#cifraTools').querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{cifraFollow=b.dataset.f;if(cifraEditing)closeCifraEditor(false);renderCifra(true);});
